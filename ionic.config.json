@@ -1,0 +1,8 @@
+{
+  "name": "sltvcompanion",
+  "app_id": "dfd4dff1",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
