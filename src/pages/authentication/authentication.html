@@ -1,0 +1,35 @@
+<ion-content class="no-scroll" text-center>
+    <div style="height:278px; background-color: #2E4600;">
+        <ion-title style="background-color: #2E4600;">Welcome to SLTV COMPANION!</ion-title>
+        <br><br><br>        
+        <br><br>            
+    </div>
+    
+    <ion-row class="login-form">
+        <ion-col>
+            <ion-list inset>
+ 
+              <ion-item>
+                <ion-label><ion-icon name="person"></ion-icon></ion-label>
+                <ion-input text-center style="background-color: #2E4600; font-size: 1.3rem;" [(ngModel)]="username" placeholder="User Name" type="text"></ion-input>
+              </ion-item>
+ 
+              <ion-item>
+                <ion-label><ion-icon name="lock"></ion-icon></ion-label>
+                <ion-input text-center style="background-color: #2E4600; font-size: 1.3rem;" [(ngModel)]="password" placeholder="Password" type="password"></ion-input>
+              </ion-item>
+ 
+            </ion-list>
+ 
+            <button ion-button outline small color="forestgreen" class="login-button"  (click)="login()">Login</button>
+ 
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col>
+            <button ion-button outline small color="forestgreen" class="create-account" (click)="register()">Sign Up</button>
+        </ion-col>
+    </ion-row>
+ 
+</ion-content>

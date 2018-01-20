@@ -1,0 +1,31 @@
+<ion-content padding class="myModal">
+  	<ion-card>
+      <ion-toolbar color="forestgreen">      
+        <ion-title text-center>New Order</ion-title>       
+      </ion-toolbar> 
+  		<p>Tv Shows</p>
+  		<ion-list *ngFor="let item of tvshows">  			
+  			<ion-item>
+  				<ion-thumbnail item-start>
+  					<img src={{base_url}}{{poster_sizes}}{{item.poster_path}} ngDefaultControl>
+  				</ion-thumbnail>
+  				<p style="color:#021C1E;"><strong>{{item.title}}</strong></p>  
+        		<p style="color:#021C1E;"><strong>Season {{item.season_number + 1}}</strong></p>
+  			</ion-item>
+  		</ion-list>
+  		<p>Movies</p>
+  		<ion-list *ngFor="let item of movies">  			
+  			<ion-item>
+  				<ion-thumbnail item-start>
+  					<img src={{base_url}}{{poster_sizes}}{{item.poster_path}} ngDefaultControl>
+  				</ion-thumbnail>
+  				<p style="color:#021C1E;"><strong>{{item.title}}</strong></p>  
+  			</ion-item>
+  		</ion-list>
+  	</ion-card>
+
+	<ion-fab left top>
+  		<button ion-fab mini color="forestgreen" (click)="onClose()"><ion-icon name="arrow-dropleft"></ion-icon></button>
+	</ion-fab>
+
+</ion-content>

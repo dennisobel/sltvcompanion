@@ -1,0 +1,13 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>chattwo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-input type='text' [(ngModel)]="message" placeholder="Your message here"></ion-input>
+	<button ion-button block (click)="sendMessage()">Send</button>
+</ion-content>

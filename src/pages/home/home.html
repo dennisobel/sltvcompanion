@@ -1,18 +1,69 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+  <ion-navbar color="forestgreen" hideBackButton>
+    <button ion-button show menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    </button> 
+    <ion-buttons end>
+        <button clear (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>  
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
+  <ion-toolbar color="forestgreen" [(ngModel)]="listorders">
+      <ion-segment color="blueblack" style="font-size:1.3rem" no-border-bottom>
+        <ion-segment-button value="orders">
+          Orders
+        </ion-segment-button>
+        <ion-segment-button value="delivered">
+          Delivered
+        </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <div [ngSwitch]="listorders">
+    <div *ngSwitchCase="'orders'">   
+      <ion-card *ngFor="let cart of cart">   
+        <p style="color:#021C1E;"><strong>{{cart.phone_number}}</strong></p>        
+        <ion-title style="color:#2E4600;" text-center>Movies</ion-title> 
+        <ion-list *ngFor="let item of cart.movies">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img [(ngModel)]="configuration" src={{configuration.base_url}}{{configuration.poster_sizes[6]}}{{item.poster_path}} ngDefaultControl>
+              </ion-thumbnail>
+              <p style="color:#021C1E;"><strong>{{item.title}}</strong></p>    
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="strawberry">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-list>  
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+        
+        <ion-title style="color:#2E4600;" text-center>Tv Shows</ion-title> 
+        <ion-list *ngFor="let item of cart.tvshows">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img [(ngModel)]="configuration" src={{configuration.base_url}}{{configuration.poster_sizes[6]}}{{item.poster_path}} ngDefaultControl>
+              </ion-thumbnail>
+              <p style="color:#021C1E;"><strong>{{item.title}} : {{item.season_number + 1}}</strong></p>                  
+              <p style="color:#021C1E;"><strong>{{item.episode_count}} episodes.</strong></p>    
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="strawberry">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-list>  
+        <button ion-button outline small full color="dark" (click)="onDelivered(cart)">Mark as delivered</button>       
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
