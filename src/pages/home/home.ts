@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { Socket } from 'ng-socket-io';
-import { ChatRoomPage } from "../chat-room/chat-room"
-import { Observable } from 'rxjs/Observable';
+// import { ChatRoomPage } from "../chat-room/chat-room"
+// import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
-import { Http } from "@angular/http"
+// import { Http } from "@angular/http"
 import { ConfigProvider } from '../../providers/config/config'
 import { MoviesProvider } from '../../providers/movies/movies'
 import { AuthenticationPage } from '../authentication/authentication';
@@ -21,6 +21,9 @@ export class HomePage {
 	listorders="orders"
 	nickname = "";
 	cart:any[]=[];
+	delivered:any[]=[];
+	_delivered:any[]=[];
+	_del:any[]=[];
 	movies:any[]=[];
 	tvshows:any[]=[];
 	phone_number:any;
@@ -40,16 +43,15 @@ export class HomePage {
 		public alertCtrl: AlertController,
 		public socket: Socket, 
 		public storage: Storage,
-		public http: Http,
+		// public http: Http,
 		public authService: AuthProvider,
 		public config: ConfigProvider,	
 		public utilsProvider: UtilsProvider,	 
 		public get_movies: MoviesProvider){
 
-		this.socket.on("new_order", (data) => {
+		this.socket.on("new_order", (data) => {		
 			
-			
-			console.log("Receiving data from server")
+			// console.log("Receiving data from server")
 			
 
 			this.utilsProvider.postMovieTvShowCart(data)
@@ -63,16 +65,17 @@ export class HomePage {
 
 	ionViewDidLoad(){
 		this.getValue()	
+		this.getDelivered()
 		this.utilsProvider.getCartsPosted()
 		.subscribe(res => {
 			//this.cart = res.data	
-			console.log(res)		
+			//console.log(res)		
 		})
 
 
 		this.storage.get('user')
 		.then((value)=>{
-			console.log(value.username)
+			// console.log(value.username)
 			this.nickname = value.username
 			this.socket.emit("add_user",{username:this.nickname})
 		})
@@ -83,14 +86,46 @@ export class HomePage {
 		})
 	}
 
+	ionViewDidLeave(){
+		this.storage.get('user')
+		.then((value)=>{
+			let nickname = value.username
+			// console.log(nickname)
+			// console.log(value.username)
+			this.socket.emit("offline",{username:nickname})
+		})
+	}
+
 	logout(){
 		this.authService.logout()
 		this.navCtrl.setRoot(AuthenticationPage)
 	}
 
-	// onDelivered(cart){
-	// 	this.removeConnected(cart)
-	// }
+	onDelivered(cart){
+
+		let alert = this.alertCtrl.create({
+			title:"You sure you wanna mark as delivered?",
+			buttons:[
+				{
+					text:"Sure",
+					handler:()=>{							
+						this.removeConnected(cart)
+						this.getValue()
+					}			
+				},
+				{
+					text:"My Bad",
+					role:"cancel",
+					handler:()=>{
+						//this.ionViewDidLoad()
+					}
+				}				
+			]			
+		})
+
+		alert.present()
+
+	}
 
 	presentAlert(neworder){		
 		let _newcart = this.alertCtrl.create({
@@ -119,11 +154,11 @@ export class HomePage {
 	}	
 
 	setValue(data){
-		 this._data.push(data)
+		this._data.push(data)
 		this.storage.set("object",this._data)
 		.then((successData)=>{
-			console.log("Data stored")
-			console.log(successData)
+			// console.log("Data stored")
+			// console.log(successData)
 		})
 		.then(()=>{
 			this.ionViewDidLoad()
@@ -133,18 +168,39 @@ export class HomePage {
 	getValue(){
 		this.storage.get("object")
 		.then((data)=>{
-			console.log(data);
 			this.cart = data
-			console.log(this.cart)
+			// console.log(this.cart)
 		})
 		return this.cart
 	}
 
-	removeConnected(){
-		this.storage.remove("object")
-		.then(()=>{
-			console.log("connected removed")
+	getDelivered(){
+		this.storage.get("delivered")
+		.then((data)=>{
+			this.delivered = data
+			// console.log(this.delivered)
 		})
+		return this.delivered
+	}
+
+	removeConnected(cart){
+		let index = this.cart.indexOf(cart)
+		this._del.push(this.cart[index])
+		this.cart.splice(index,1)
+		
+		// console.log(this._del)
+		this.storage.set("object",this.cart)
+		.then((successData)=>{
+			this._delivered.push(successData)
+		})
+
+		this.storage.set("delivered",this._del)
+		.then((successDelivered)=>{
+			// console.log(successDelivered)
+		})
+		.then(()=>{
+			this.ionViewDidLoad()
+		})		
 	}
 
 	clearStorage(){
@@ -154,47 +210,3 @@ export class HomePage {
 }
 
 
-// getMessages(){
-// 	let observable = new Observable(observer => {
-// 		this.socket.on("new_order", (data) => {
-// 			console.log("receiving data from server...")
-// 			observer.next(data);
-// 		});
-// 	})
-// 	return observable
-// }
-
-
-	// this.getMessages().subscribe(cart => {
-// 	console.log("receiving data from observable")
-// 	console.log("save and fire modal")
-
-// 	this.utilsProvider.postMovieTvShowCart(cart)
-// 	.subscribe(res => {})
-
-// 	//display new cart
-// 	let _newCartAlert = this.alertCtrl.create({
-// 		title:"You have a new order.",
-// 		buttons:[
-// 			{
-// 				text:"View",
-// 				handler:()=>{							
-// 					let _cartModal = this.modalCtrl.create(NewcartPage, {cart:cart})
-// 					_cartModal.present()
-// 					//this.ionViewDidLoad()
-// 				}
-// 			},
-// 			{
-// 				text:"Cancel",
-// 				role:"cancel",
-// 				handler:()=>{
-// 					//this.ionViewDidLoad()
-// 				}
-// 			}
-// 		]
-// 	})
-	
-// 	_newCartAlert.present()
-
-
-// })

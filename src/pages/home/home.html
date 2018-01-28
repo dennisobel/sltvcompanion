@@ -62,8 +62,52 @@
             </ion-item-options>
         </ion-item-sliding>
         </ion-list>  
-        <button ion-button outline small full color="dark" (click)="onDelivered(cart)">Mark as delivered</button>       
+        <button ion-button outline small full color="dark" (click)="onDelivered(cart)">Mark As Delivered</button>       
       </ion-card>
     </div>
+
+
+
+
+    <div *ngSwitchCase="'delivered'">   
+      <ion-card *ngFor="let cart of delivered">   
+        <p style="color:#021C1E;"><strong>{{cart.phone_number}}</strong></p>        
+        <ion-title style="color:#2E4600;" text-center>Movies</ion-title> 
+        <ion-list *ngFor="let item of cart.movies">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img [(ngModel)]="configuration" src={{configuration.base_url}}{{configuration.poster_sizes[6]}}{{item.poster_path}} ngDefaultControl>
+              </ion-thumbnail>
+              <p style="color:#021C1E;"><strong>{{item.title}}</strong></p>    
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="strawberry">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-list>  
+
+        
+        <ion-title style="color:#2E4600;" text-center>Tv Shows</ion-title> 
+        <ion-list *ngFor="let item of cart.tvshows">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img [(ngModel)]="configuration" src={{configuration.base_url}}{{configuration.poster_sizes[6]}}{{item.poster_path}} ngDefaultControl>
+              </ion-thumbnail>
+              <p style="color:#021C1E;"><strong>{{item.title}} : {{item.season_number + 1}}</strong></p>                  
+              <p style="color:#021C1E;"><strong>{{item.episode_count}} episodes.</strong></p>    
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="strawberry">
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-list>          
+      </ion-card>
+    </div>    
   </div>
 </ion-content>

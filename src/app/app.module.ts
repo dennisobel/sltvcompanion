@@ -6,9 +6,9 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ChatRoomPage } from "../pages/chat-room/chat-room"
-import { ListPage } from '../pages/list/list';
-import { ChattwoPage } from '../pages/chattwo/chattwo';
+// import { ChatRoomPage } from "../pages/chat-room/chat-room"
+// import { ListPage } from '../pages/list/list';
+// import { ChattwoPage } from '../pages/chattwo/chattwo';
 import { NewcartPage } from '../pages/newcart/newcart';
 
 import { AuthenticationPage } from '../pages/authentication/authentication';
@@ -22,15 +22,16 @@ import { MoviesProvider } from '../providers/movies/movies';
 import { AuthProvider } from '../providers/auth/auth';
 import { ConfigProvider } from '../providers/config/config';
 import { UtilsProvider } from '../providers/utils/utils';
-const config: SocketIoConfig = { url: 'https://sltvsocket.herokuapp.com', options: {} };
+const config: SocketIoConfig = { url: 'https://sltvsocket.herokuapp.com/', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:3000/', options: {} };
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
-    ChatRoomPage,
-    ChattwoPage,
+    // ListPage,
+    // ChatRoomPage,
+    // ChattwoPage,
     NewcartPage,
     AuthenticationPage
   ],
@@ -45,9 +46,9 @@ const config: SocketIoConfig = { url: 'https://sltvsocket.herokuapp.com', option
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
-    ChatRoomPage,
-    ChattwoPage,
+    // ListPage,
+    // ChatRoomPage,
+    // ChattwoPage,
     NewcartPage,
     AuthenticationPage
   ],

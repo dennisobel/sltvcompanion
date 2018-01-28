@@ -26,7 +26,7 @@ export class NewcartPage {
 		this.cart = this.navParams.get("cart")		
 		this.tvshows = this.cart.tvshows
 		this.movies = this.cart.movies
-		console.log(this.tvshows)
+		// console.log(this.tvshows)
 
 
 		//config

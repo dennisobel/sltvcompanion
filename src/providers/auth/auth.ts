@@ -70,7 +70,7 @@ export class AuthProvider {
  
         this.http.post('https://sltvcompanionserver.herokuapp.com/api/auth/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
-           console.log(res.json())
+           // console.log(res.json())
             let data = res.json();
             this.token = data.token;
             this.user = data.user;

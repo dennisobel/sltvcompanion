@@ -21,7 +21,7 @@ export class UtilsProvider {
 
 	postMovieTvShowCart(data){
 		//preloader
-		console.log("calling postMovieTvShowCart");			
+		// console.log("calling postMovieTvShowCart");			
   		let headers = new Headers();
       	headers.append("Accept","application/json");
   		headers.append("Content-Type", "application/json");

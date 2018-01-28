@@ -28,11 +28,11 @@ export class AuthenticationPage {
  
         //Check if already authenticated
         this.authService.checkAuthentication().then((res) => {
-            console.log("Already authorized");
+            // console.log("Already authorized");
             this.loading.dismiss();
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
-            console.log("Not already authorized");
+            // console.log("Not already authorized");
             this.loading.dismiss();
         });
  
@@ -55,7 +55,7 @@ export class AuthenticationPage {
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             this.loading.dismiss();
-            console.log(err);
+            // console.log(err);
             //LOGIN ERROR WRITE ALERT HERE!!!!
             let toast = this.toastCtrll.create({
                 message:"Rectify login credentials and try again.",
@@ -65,7 +65,7 @@ export class AuthenticationPage {
             })
 
             toast.onDidDismiss(()=>{
-                console.log("Dismissed toast")
+                // console.log("Dismissed toast")
             });
 
             toast.present();
@@ -84,7 +84,7 @@ export class AuthenticationPage {
         this.authService.createAccount(details)
         .then((result) => {
             this.loading.dismiss();
-            console.log(result);
+            // console.log(result);
             this.navCtrl.setRoot(HomePage);
         }, (err) => {
             this.loading.dismiss();
